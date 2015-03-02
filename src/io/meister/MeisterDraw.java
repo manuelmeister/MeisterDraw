@@ -10,8 +10,12 @@ import java.lang.reflect.*;
 public class MeisterDraw {
 
     public MeisterDraw() {
-        Box rect = new Box(0,0,10,100);
-        rect.move(10,10);
+        DrawingBoard drawingBoard = new DrawingBoard();
+        Figure[] figuren = new Figure[2];
+        figuren[0] = new Box(0,0,100,200);
+        figuren[1] = new Circle(300,300,300);
+        Drawing drawing = new Drawing(figuren);
+        drawingBoard.show(drawing);
     }
 
     public void loader(){
