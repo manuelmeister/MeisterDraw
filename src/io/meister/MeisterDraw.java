@@ -12,7 +12,6 @@ public class MeisterDraw {
     public MeisterDraw() {
         Box rect = new Box(0,0,10,100);
         rect.move(10,10);
-        loader();
     }
 
     public void loader(){
