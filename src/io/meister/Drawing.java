@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class Drawing {
 
-    private Figure[] figuren;
+    private ArrayList<Figure> figuren;
 
-    public Drawing(Figure[] figuren) {
+    public Drawing(ArrayList<Figure> figuren) {
         this.figuren = figuren;
     }
 
-//    public void add(Figure f){
-//        this.figuren.add(f);
-//    }
+    public void add(Figure f){
+        this.figuren.add(f);
+    }
 
     public void draw(Graphics g) {
         for (Figure f : this.figuren){

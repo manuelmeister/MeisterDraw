@@ -1,6 +1,6 @@
 package io.meister;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * Die Klasse Zeichenbrett ermöglicht die Darstellung von Zeichnungen.

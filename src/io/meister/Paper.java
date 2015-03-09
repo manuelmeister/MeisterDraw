@@ -1,8 +1,11 @@
 package io.meister;
 
+import io.meister.figure.Box;
 import io.meister.figure.Square;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -17,11 +20,17 @@ import javax.swing.JPanel;
  * @author Andres Scheidegger
  */
 @SuppressWarnings("serial")
-public class Paper extends JPanel {
+public class Paper extends JPanel implements MouseListener {
     /**
      * Die Zeichnung.
      */
     private Drawing drawing;
+
+    private int x,y;
+
+    public Paper() {
+        addMouseListener(this);
+    }
 
     /**
      * Die Methode paintComponent zeichnet die Zeichnung auf das Papier.
@@ -44,5 +53,33 @@ public class Paper extends JPanel {
      */
     public void setDrawing(final Drawing drawing) {
         this.drawing = drawing;
+    }
+
+    public void mousePressed(MouseEvent e) {
+        this.x = e.getX();
+        this.y = e.getY();
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        // Bestimmen Breite und Hoehe des neuen Rechtecks
+        int width = e.getX() - this.x;
+        int height = e.getY() - this.y;
+        // Erzeugen ein neues Rechteckobjekt und speichern dieses
+        // in der Zeichnung. Anschliessend alles neu zeichnen.
+        Box figur = new Box(this.x, this.y, width, height);
+        drawing.add(figur);
+        repaint();
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+
     }
 }

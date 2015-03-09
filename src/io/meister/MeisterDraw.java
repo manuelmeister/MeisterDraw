@@ -4,14 +4,15 @@ import io.meister.figure.*;
 import io.meister.figure.Box;
 
 import java.lang.reflect.*;
+import java.util.ArrayList;
 
 public class MeisterDraw {
 
     public MeisterDraw() {
         DrawingBoard drawingBoard = new DrawingBoard();
-        Figure[] figuren = new Figure[2];
-        figuren[0] = new Box(0,0,100,200);
-        figuren[1] = new Circle(300,300,300);
+        ArrayList<Figure> figuren = new ArrayList<Figure>(2);
+        figuren.add(0,new Box(0,0,100,200));
+        figuren.add(1,new Circle(300,300,300));
         Drawing drawing = new Drawing(figuren);
         drawingBoard.show(drawing);
     }
