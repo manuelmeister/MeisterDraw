@@ -22,4 +22,10 @@ public class Drawing {
             f.draw(g);
         }
     }
+
+    public void move(int x, int y) {
+        for (Figure f : this.figuren){
+            f.move(x,y);
+        }
+    }
 }
