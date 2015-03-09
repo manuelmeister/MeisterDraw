@@ -3,8 +3,6 @@ package io.meister;
 import io.meister.figure.*;
 import io.meister.figure.Box;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.lang.reflect.*;
 
 public class MeisterDraw {
