@@ -6,6 +6,7 @@ import io.meister.figure.Square;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -60,25 +61,31 @@ public class Paper extends JPanel implements MouseListener {
         this.y = e.getY();
     }
 
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
     public void mouseReleased(MouseEvent e) {
+
         // Bestimmen Breite und Hoehe des neuen Rechtecks
-        int width = e.getX() - this.x;
-        int height = e.getY() - this.y;
+        // Wenn die neue X Maus Position grösser ist als die initale, dann nimm die initiale, sonst die Neue
+        int startPosX = (e.getX() > this.x) ? this.x : e.getX();
+        int startPosY = (e.getY() > this.y) ? this.y : e.getY();
+        int width = Math.abs(e.getX() - this.x);
+        int height = Math.abs(e.getY() - this.y);
+
         // Erzeugen ein neues Rechteckobjekt und speichern dieses
         // in der Zeichnung. Anschliessend alles neu zeichnen.
-        Box figur = new Box(this.x, this.y, width, height);
+        Box figur = new Box(startPosX, startPosY, height, width);
         drawing.add(figur);
         repaint();
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
     }
 
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    // if the mouse is excited ;)
     public void mouseExited(MouseEvent e) {
 
     }
