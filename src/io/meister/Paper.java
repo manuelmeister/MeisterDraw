@@ -1,12 +1,12 @@
 package io.meister;
 
 import io.meister.figure.Box;
-import io.meister.figure.Square;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * @author Andres Scheidegger
  */
 @SuppressWarnings("serial")
-public class Paper extends JPanel implements MouseListener {
+public class Paper extends JPanel implements MouseListener,KeyListener {
     /**
      * Die Zeichnung.
      */
@@ -30,7 +30,9 @@ public class Paper extends JPanel implements MouseListener {
     private int x,y;
 
     public Paper() {
+
         addMouseListener(this);
+        addKeyListener(this);
     }
 
     /**
@@ -72,6 +74,7 @@ public class Paper extends JPanel implements MouseListener {
 
         // Erzeugen ein neues Rechteckobjekt und speichern dieses
         // in der Zeichnung. Anschliessend alles neu zeichnen.
+
         Box figur = new Box(startPosX, startPosY, height, width);
         drawing.add(figur);
         repaint();
@@ -87,6 +90,18 @@ public class Paper extends JPanel implements MouseListener {
 
     // if the mouse is excited ;)
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    public void keyReleased(KeyEvent e) {
 
     }
 }
