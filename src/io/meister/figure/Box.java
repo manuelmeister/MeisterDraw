@@ -6,6 +6,7 @@ public class Box extends Figure {
 
     private int side;
     private int lenght;
+    public static char shortcutchar = 'r';
 
     public Box(int posx, int posy, int side, int lenght) {
         super(posx, posy);

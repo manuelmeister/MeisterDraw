@@ -6,6 +6,7 @@ public class Oval extends Figure {
 
     private int height;
     private int width;
+    public static char shortcutchar = 'o';
 
     public Oval(int posx, int posy, int height, int width) {
         super(posx, posy);
