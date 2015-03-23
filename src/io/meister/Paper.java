@@ -1,36 +1,42 @@
 package io.meister;
 
-import io.meister.figure.Box;
+import io.meister.figure.Figure;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Papier ist eine von JPanel abgeleitete Swing-Komponente.
  * - Sie dient als "Zeichenblatt" f¸r Zeichnungen.
  * - Sie speichert die Zeichnung in einer Instanzvariablen.
  * - Sie ¸berschreibt die Methode paintComponent der Klasse JPanel
- *   so, dass bei ihrem Aufruf die Zeichnung auf das Papier gezeichnet
- *   wird.
+ * so, dass bei ihrem Aufruf die Zeichnung auf das Papier gezeichnet
+ * wird.
  *
  * @author Andres Scheidegger
  */
 @SuppressWarnings("serial")
-public class Paper extends JPanel implements MouseListener,KeyListener {
+public class Paper extends JPanel implements MouseListener, KeyListener {
     /**
      * Die Zeichnung.
      */
     private Drawing drawing;
 
-    private int x,y;
+    private FigureFactory figureFactory;
+
+    private Map<Character, FigureFactory> factories;
+
+    private Point firstPoint, secondPoint;
 
     public Paper() {
-
+        this.factories = FactoryLoader.load();
+        this.figureFactory = factories.get('r');
         addMouseListener(this);
         addKeyListener(this);
     }
@@ -40,7 +46,7 @@ public class Paper extends JPanel implements MouseListener,KeyListener {
      * Sie erh‰lt dazu ein Graphics-Objekt, welches sie an die Zeichnung
      * weitergibt.
      *
-     * @param g  Graphics-Objekt, welches zum zeichnen verwendet werden soll.
+     * @param g Graphics-Objekt, welches zum zeichnen verwendet werden soll.
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override
@@ -50,7 +56,7 @@ public class Paper extends JPanel implements MouseListener,KeyListener {
     }
 
     /**
-     * Setter f¸r die Instanzvariable zeichnung.
+     * Setter für die Instanzvariable zeichnung.
      *
      * @param drawing Die zu zeichnende Zeichnung.
      */
@@ -59,24 +65,37 @@ public class Paper extends JPanel implements MouseListener,KeyListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        this.x = e.getX();
-        this.y = e.getY();
+        this.firstPoint = new Point(e.getX(), e.getY());
     }
 
     public void mouseReleased(MouseEvent e) {
 
         // Bestimmen Breite und Hoehe des neuen Rechtecks
         // Wenn die neue X Maus Position grösser ist als die initale, dann nimm die initiale, sonst die Neue
-        int startPosX = (e.getX() > this.x) ? this.x : e.getX();
-        int startPosY = (e.getY() > this.y) ? this.y : e.getY();
-        int width = Math.abs(e.getX() - this.x);
-        int height = Math.abs(e.getY() - this.y);
+
+        this.secondPoint = new Point(e.getX(), e.getY());
 
         // Erzeugen ein neues Rechteckobjekt und speichern dieses
         // in der Zeichnung. Anschliessend alles neu zeichnen.
-
-        Box figur = new Box(startPosX, startPosY, height, width);
-        drawing.add(figur);
+        Figure figure;
+        try {
+            figure = figureFactory.create(this.firstPoint, this.secondPoint);
+            drawing.add(figure);
+        } catch (Exception exeption) {
+            Window parentWindow = SwingUtilities.windowForComponent(this);
+            Frame parentFrame = null;
+            if (parentWindow instanceof Frame) {
+                parentFrame = (Frame) parentWindow;
+            }
+            JDialog dialog = new JDialog(parentFrame, "Information");
+            dialog.setSize(200, 100);
+            dialog.add(new JLabel("Tool nicht verfügbar"));
+            dialog.setLocation(300, 300);
+            dialog.setVisible(true);
+            this.figureFactory = factories.get('r');
+            figure = figureFactory.create(this.firstPoint, this.secondPoint);
+            drawing.add(figure);
+        }
         repaint();
     }
 
@@ -98,7 +117,8 @@ public class Paper extends JPanel implements MouseListener,KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-
+        Character keyChar = e.getKeyChar();
+        this.figureFactory = factories.get((keyChar == null ? 'r' : keyChar));
     }
 
     public void keyReleased(KeyEvent e) {

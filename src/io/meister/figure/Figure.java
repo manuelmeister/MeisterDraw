@@ -6,7 +6,6 @@ public abstract class Figure {
 
     protected int startPosX;
     protected int startPosY;
-    public static char shortcutchar;
 
     protected Figure(int startPosX, int startPosY) {
         this.startPosX = startPosX;

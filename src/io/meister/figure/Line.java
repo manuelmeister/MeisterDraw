@@ -6,7 +6,6 @@ public class Line extends Figure {
 
     private int endPosX;
     private int endPosY;
-    public static char shortcutchar = 'l';
 
     public Line(int startPosX, int startPosY, int endPosX, int endPosY) {
         super(startPosX, startPosY);

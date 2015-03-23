@@ -24,6 +24,8 @@ public class DrawingBoard extends JFrame {
      */
     public DrawingBoard() {
         super("Zeichenbrett für Figuren");
+        addMouseListener(this.paper);
+        addKeyListener(this.paper);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocation(200, 200);
